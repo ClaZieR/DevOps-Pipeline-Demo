@@ -18,5 +18,25 @@ pipeline {
                 }
             }
         }
+        stage('Docker Build Front-End') {
+            steps {
+                script {
+                   withDockerRegistry(credentialsId: 'DockerHub-Jenkins') {
+                       sh "docker build -t devops-pipeline-frontend-demo:latest -f front/Dockerfile ."
+                       sh "docker tag devops-pipeline-frontend-demo:latest ClaZieR8/devops-pipeline-frontend-demo:latest"
+                   }
+                }
+            }
+        }
+        stage('Docker Build Back-End') {
+            steps {
+                script {
+                   withDockerRegistry(credentialsId: 'DockerHub-Jenkins') {
+                       sh "docker build -t devops-pipeline-backend-demo:latest -f back/Dockerfile ."
+                       sh "docker tag devops-pipeline-backend-demo:latest ClaZieR8/devops-pipeline-backend-demo:latest"
+                   }
+                }
+            }
+        }
     }
 }
