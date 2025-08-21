@@ -22,8 +22,9 @@ pipeline {
             steps {
                 script {
                    withDockerRegistry(credentialsId: 'DockerHub-Jenkins') {
-                       sh "docker build -t devops-pipeline-frontend-demo:latest -f front/Dockerfile ."
-                       sh "docker tag devops-pipeline-frontend-demo:latest ClaZieR8/devops-pipeline-frontend-demo:latest"
+                       sh "docker build -t devops-pipeline-frontend-demo:latest -f frontend/Dockerfile ./frontend"
+                       sh "docker tag devops-pipeline-frontend-demo:latest clazier8/devops-pipeline-frontend-demo:latest"
+                       sh "docker push clazier8/devops-pipeline-frontend-demo:latest"
                    }
                 }
             }
@@ -32,8 +33,9 @@ pipeline {
             steps {
                 script {
                    withDockerRegistry(credentialsId: 'DockerHub-Jenkins') {
-                       sh "docker build -t devops-pipeline-backend-demo:latest -f back/Dockerfile ."
-                       sh "docker tag devops-pipeline-backend-demo:latest ClaZieR8/devops-pipeline-backend-demo:latest"
+                       sh "docker build -t devops-pipeline-backend-demo:latest -f backend/Dockerfile ./backend"
+                       sh "docker tag devops-pipeline-backend-demo:latest clazier8/devops-pipeline-backend-demo:latest"
+                       sh "docker push clazier8/devops-pipeline-backend-demo:latest"
                    }
                 }
             }

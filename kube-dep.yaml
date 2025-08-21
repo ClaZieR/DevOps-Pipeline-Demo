@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-frontend
+spec:
+  selector:
+    matchLabels:
+      type: app-frontend
+  template:
+    metadata:
+      labels:
+        app: app-frontend
+    spec:
+      containers:
+      - name: app-frontend
+        image: clazier8/devops-pipeline-frontend-demo:latest
+        ports:
+        - containerPort: 80
