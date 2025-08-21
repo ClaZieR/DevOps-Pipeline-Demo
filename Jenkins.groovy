@@ -40,5 +40,12 @@ pipeline {
                 }
             }
         }
+        stage('Kubernetes Deployment') {
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'Kube-Jenkins', namespace: '', restrictKubeConfigAccess: false, serverUrl: '192.168.1.42:6443') {
+                    sh "kubectl apply -f kube-dep.yaml"
+                }
+            }
+        }
     }
 }
