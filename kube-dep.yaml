@@ -1,11 +1,13 @@
+#frontend deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-frontend
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      type: app-frontend
+      app: app-frontend
   template:
     metadata:
       labels:
@@ -16,3 +18,91 @@ spec:
         image: clazier8/devops-pipeline-frontend-demo:latest
         ports:
         - containerPort: 80
+
+---
+#backend deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-backend
+  template:
+    metadata:
+      labels:
+        app: app-backend
+    spec:
+      containers:
+      - name: app-backend
+        image: clazier8/devops-pipeline-backend-demo:latest
+        ports:
+        - containerPort: 4000
+
+---
+#backend service
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-backend
+spec:
+  selector:
+    app: app-backend
+  ports:
+  - protocol: TCP
+    port: 4000
+    targetPort: 4000
+
+---
+#frontend service
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-frontend
+spec:
+  selector:
+    app: app-frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+#backend ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-backend
+spec:
+  rules:
+  - host: backend.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-backend
+            port:
+              number: 4000
+
+---
+#frontend ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-frontend
+spec:
+  rules:
+  - host: frontend.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-frontend
+            port:
+              number: 80
