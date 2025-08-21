@@ -75,7 +75,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: app-backend
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
   - host: backend.local
     http:
@@ -94,7 +97,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: app-frontend
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
   - host: frontend.local
     http:
