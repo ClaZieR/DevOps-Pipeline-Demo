@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
       - name: app-frontend
-        image: clazier8/devops-pipeline-frontend-demo:latest
-        ports:
+        image: clazier8/devops-pipeline-frontend-demo:2.0
         - containerPort: 80
 
 ---
@@ -37,7 +36,7 @@ spec:
     spec:
       containers:
       - name: app-backend
-        image: clazier8/devops-pipeline-backend-demo:latest
+        image: clazier8/devops-pipeline-backend-demo:2.0
         ports:
         - containerPort: 4000
 
