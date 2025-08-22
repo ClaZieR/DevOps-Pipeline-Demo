@@ -2,7 +2,7 @@ FROM node:18 as build-stage
 WORKDIR /app
 
 # Accept build argument
-ARG REACT_APP_API_URL=http://backend.local:31919/
+ARG REACT_APP_API_URL=http://backend.local:31919
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
 
 COPY . .
