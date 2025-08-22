@@ -16,6 +16,7 @@ spec:
       containers:
       - name: app-frontend
         image: clazier8/devops-pipeline-frontend-demo:2.0
+        ports:
         - containerPort: 80
 
 ---
